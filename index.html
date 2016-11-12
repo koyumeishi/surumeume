@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+      $(function($){
+        console.log("unko");
+        $.getJSON("./contest.json", function(data){
+          let today = new Date();
+          for(let i=0; i<data["contest"].length; i++){
+            let start = new Date(data["contest"][i]["from"]);
+            let end   = new Date(data["contest"][i]["to"]);
+            end.setDate( end.getDate() + 1 );
+            $("#contest_list").append(`
+                <div class="row ${(start <= today && today < end)?"active_contest":""}">
+                  <div class="col-md-3">
+                    <a href="${data["contest"][i]["id"]}/">
+                      ${data["contest"][i]["name"]}
+                    </a>
+                  </div>
+                  <div class="col-md-3">
+                    <p>
+                      ${data["contest"][i]["from"]} - ${data["contest"][i]["to"]}
+                    </p>
+                  </div>
+                </div>
+              `);
+          }
+        });
+      });
+    </script>
+  </head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <span class="navbar-brand" >SRM埋め</span>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      .
+    </div>
+    <div class="row">
+      <h3 id="rule">Rule</h3>
+      <div class="col-md-11">
+        SRM 過去問埋めを捗らせるためのコンテストです。 Google Spreadsheets で管理してますが、重いので軽量なウェブページ版も用意しました。<br>
+        <ol>
+          <li> 期間内に practice room に提出されたものを自動で集計します</li>
+          <li> 0点以外の提出は正解とみなします</li>
+          <li> 提出を消去した場合、challenge で落とされた場合は、その提出はなかったものとして扱われます（落ちる提出は消す or 落とす推奨）</li>
+          <li> 集計は1時間毎 &amp; topcoder が提供する data feeds に遅延があるので、提出してから 1,2 時間程度のラグが発生します
+          （もしかすると Google Apps Script の制限で集計が止まるかも）</li>
+          <li> テストケース・他者の提出・解説を確認すること等は禁止しませんが、過去の自分/他者の提出をそのままコピペするのはご遠慮ください（練習なので）</li>
+          <li> 一律で Easy 250pts, Medium 500pts, Hard 1000pts として計算します。 時間経過・再提出による得点の減衰は考慮しません</li>
+          <li> レートがまだ付いてない方はハンドルネームではなく topcoder ID が表示されます</li>
+        </ol>
+      </div>
+    </div>
+    <div id="contest_list">
+      <h3>Contests</h3>
+      <div class="row">
+        <div class="col-md-3">Contest Name</div>
+        <div class="col-md-3">Start/End Time</div>
+      </div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>

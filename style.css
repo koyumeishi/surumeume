@@ -1,0 +1,46 @@
+.solved_by_me.solved_by_rival {
+  background-color: #cfe2f3 !important;
+  color : #073763 !important;
+  font-weight: bold;
+}
+.solved_by_me {
+  background-color : #d9ead3;
+  color : #274e5d !important;
+  font-weight: bold;
+}
+.solved_by_rival {
+  background-color : #f4cccc;
+  color : #660000 !important;
+  font-weight: bold;
+}
+th, td{
+  text-align : center;
+  font-size : 12px;
+  padding : 2px;
+}
+*{
+  background-image:none !important;
+}
+.row{
+  padding : 10px;
+}
+.level_1{
+  background-color: #c9daf8;
+}
+.level_2{
+  background-color: #fce5cd;
+}
+.level_3{
+  background-color: #f4cccc;
+}
+
+.active_contest{
+  background-color: #d9ead3;
+}
+
+.virtual_link:hover{
+  cursor:pointer;
+}
+.problem_link{
+  color: inherit;
+}
