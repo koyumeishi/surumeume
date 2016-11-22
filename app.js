@@ -16,6 +16,7 @@ $(function($){
         $("#contest_name").text(data["data"]["name"]);
         $("#start_end_time").text(`${data["data"]["from"]} - ${data["data"]["to"]}`);
         $("#spread_sheet_url").attr("href", url_spread_sheet).text(url_spread_sheet);
+        $("#description").html(data["data"]["description"]);
         resolve(1);
       });
     });
@@ -103,6 +104,10 @@ function setUserList(){
   }
 
   let users = submission_data.getDistinctValues(0);
+  users.sort(function(a,b){
+    if(a.toLowerCase() < b.toLowerCase()) return -1;
+    else return 1;
+  });
   
   let user_list_me = $('#user_me');
   for(let i=0; i<users.length; i++){
@@ -190,34 +195,36 @@ function setState(){
     cnt[Number(level-1)]++;
   }
   if(solved.length > 0) $("#count_solved").append(`<tr>
-      <td>${$("#user_me").val()}</td>
+      <td><a href="https://www.topcoder.com/members/${$("#user_me").val()}" target="_blank">${$("#user_me").val()}</a></td>
       <td>${cnt[0]}</td>
       <td>${cnt[1]}</td>
       <td>${cnt[2]}</td>
       <td>${cnt[0]*250 + cnt[1]*500 + cnt[2]*1000}</td>
     </tr>`);
 
-  for(let i=0; i<3; i++){
-    let table_for_chart = new google.visualization.DataTable();
-    table_for_chart.addColumn("string", "state");
-    table_for_chart.addColumn("number", "count");
-    table_for_chart.addRow(["Solved",  cnt[i]]);
-    table_for_chart.addRow(["Unolved", round_data.getNumberOfRows() - cnt[i]]);
+  if(user !== "-") {
+    $("#chart_you").show();
+    $("#chart_text_you").text(user);
+    for(let i=0; i<3; i++){
+      let table_for_chart = new google.visualization.DataTable();
+      table_for_chart.addColumn("string", "state");
+      table_for_chart.addColumn("number", "count");
+      table_for_chart.addRow(["Solved",  cnt[i]]);
+      table_for_chart.addRow(["Unolved", round_data.getNumberOfRows() - cnt[i]]);
 
-    let chart = new google.visualization.PieChart( $(`#chart_${["easy","med","hard"][i]}`)[0] );
-    chart.draw(table_for_chart, {
-      title  : `${["Easy","Medium","Hard"][i]}`,
-      legend : 'none',
-      width  : "100%",
-      height : 250,
-      pieSliceText: 'value',
-      slices : {
-        0:{color:`${["#0075c2","#e9bc00","#e95388"][i]}`},
-        1:{color:`${["#a2c2e6","#fff3b8","#e6c0c0"][i]}`}
-      }
-    });
-  }
-  {
+      let chart = new google.visualization.PieChart( $(`#chart_${["easy","med","hard"][i]}_you`)[0] );
+      chart.draw(table_for_chart, {
+        title  : `${["Easy","Medium","Hard"][i]}`,
+        legend : 'none',
+        width  : "100%",
+        height : 250,
+        pieSliceText: 'value',
+        slices : {
+          0:{color:`${["#0075c2","#e9bc00","#e95388"][i]}`},
+          1:{color:`${["#a2c2e6","#fff3b8","#e6c0c0"][i]}`}
+        }
+      });
+    }
     let table_for_chart = new google.visualization.DataTable();
     table_for_chart.addColumn("string", "state");
     table_for_chart.addColumn("number", "count");
@@ -226,7 +233,7 @@ function setState(){
     table_for_chart.addRow(["Score Hard",  cnt[2]*1000]);
     table_for_chart.addRow(["Unolved", round_data.getNumberOfRows()*(250+500+1000) - (cnt[0]*250 + cnt[1]*500 + cnt[2]*1000)]);
 
-    let chart_easy = new google.visualization.PieChart( $(`#chart_score`)[0] );
+    let chart_easy = new google.visualization.PieChart( $(`#chart_score_you`)[0] );
     chart_easy.draw(table_for_chart, {
       title  : `Score`,
       legend : 'none',
@@ -240,6 +247,8 @@ function setState(){
         3:{color:`#dadada`}
       }
     });
+  }else{
+    $("#chart_you").hide();
   }
 
   user = $("#user_rival").val();
@@ -252,7 +261,7 @@ function setState(){
     cnt[Number(level-1)]++;
   }
   if(solved.length > 0) $("#count_solved").append(`<tr>
-      <td>${$("#user_rival").val()}</td>
+      <td><a href="https://www.topcoder.com/members/${$("#user_rival").val()}" target="_blank">${$("#user_rival").val()}</a></td>
       <td>${cnt[0]}</td>
       <td>${cnt[1]}</td>
       <td>${cnt[2]}</td>
