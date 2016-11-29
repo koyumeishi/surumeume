@@ -15,7 +15,6 @@ $(function($){
         url_spread_sheet = data["data"]["spread_sheet_url"];
         $("#contest_name").text(data["data"]["name"]);
         $("#start_end_time").text(`${data["data"]["from"]} - ${data["data"]["to"]}`);
-        $("#spread_sheet_url").attr("href", url_spread_sheet).text(url_spread_sheet);
         $("#description").html(data["data"]["description"]);
         resolve(1);
       });
@@ -49,27 +48,35 @@ function main(url_spread_sheet){
   let p1 = new Promise(function(resolve, reject){
     let query_submission = new google.visualization.Query( `${url_spread_sheet}gviz/tq?range=submissions!A:D`);
     query_submission.setQuery("select *");
-    query_submission.send( function(r){submission_data = r.getDataTable();resolve(1);} );
+    query_submission.send( function(r){submission_data = r.getDataTable(); /*console.log(submission_data.toJSON());*/ resolve(1);} );
   });
 
   let p2 = new Promise(function(resolve, reject){
-    // let query_problem = new google.visualization.Query(`${url_spread_sheet}gviz/tq?range=problem_data!A:D`);
-    // query_problem.setQuery("select *");
-    // query_problem.send( function(r){problem_data = r.getDataTable(); resolve(1);} );
-    $.getJSON("problem_data.json", function(data){
-      problem_data = new google.visualization.DataTable(JSON.stringify(data));
+    let query_problem = new google.visualization.Query(`${url_spread_sheet}gviz/tq?range=problem_data!A:D`);
+    query_problem.setQuery("select *");
+    query_problem.send( function(r){
+      problem_data = r.getDataTable();
+      console.log(problem_data.toJSON());
       resolve(1);
-    });
+    } );
+    // $.getJSON("./problem_data.json", function(data){
+    //   problem_data = new google.visualization.DataTable(JSON.stringify(data));
+    //   resolve(1);
+    // });
   });
 
   let p3 = new Promise(function(resolve, reject){
-    // let query_round = new google.visualization.Query(`${url_spread_sheet}/tq?range=round_data!A:F`);
-    // query_round.setQuery("select A,B,D,E,F order by B");
-    // query_round.send( function(r){round_data = r.getDataTable(); resolve(1);} );
-    $.getJSON("round_data.json", function(data){
-      round_data = new google.visualization.DataTable(JSON.stringify(data));
+    let query_round = new google.visualization.Query(`${url_spread_sheet}gviz/tq?range=round_data!A:F`);
+    query_round.setQuery("select A,B,D,E,F order by B");
+    query_round.send( function(r){
+      round_data = r.getDataTable();
+      console.log( round_data.toJSON() );
       resolve(1);
-    });
+    } );
+    // $.getJSON("./round_data.json", function(data){
+    //   round_data = new google.visualization.DataTable(JSON.stringify(data));
+    //   resolve(1);
+    // });
   });
 
   Promise.all([p1,p2,p3]).then(function(dammy){
@@ -95,6 +102,11 @@ function resetTable(){
 }
 
 function setUserList(){
+  //no submission
+  if(submission_data.getNumberOfRows() == 1 && submission_data.getValue(0,0) == "handle"){
+    return;
+  }
+
   for(let i=0; i<submission_data.getNumberOfRows(); i++){
     let roundid = submission_data.getValue(i, 1);
     submission_data.setCell( i,1,roundid, `${round_data.getValue(round_data.getFilteredRows([{column:0, value:roundid}])[0],1)}`, {style:`text-align:center;`});
@@ -103,7 +115,9 @@ function setUserList(){
     submission_data.setCell( i,2,level, `${level==1?'Easy':level==2?'Medium':'Hard'}`, {className: `level_${level}`});
   }
 
+
   let users = submission_data.getDistinctValues(0);
+  delete users["handle"];
   users.sort(function(a,b){
     if(a.toLowerCase() < b.toLowerCase()) return -1;
     else return 1;
