@@ -79,13 +79,22 @@ function main(url_spread_sheet){
     // });
   });
 
-  Promise.all([p1,p2,p3]).then(function(dammy){
+  let p4 = new Promise(function(resolve, reject){
+    let query_round = new google.visualization.Query(`${url_spread_sheet}gviz/tq?range=update!A1:A1`);
+    query_round.setQuery("select *");
+    query_round.send( function(r){
+      last_update = r.getDataTable().getValue(0,0);
+      resolve(1);
+    } );
+  });
+
+  Promise.all([p1,p2,p3,p4]).then(function(dammy){
     // console.log("problem data\n" + problem_data.toJSON());
     // console.log("round data\n" + round_data.toJSON());
 
     setUserList();
     initializeTable();
-    $("#loading_text").text("");
+    $("#loading_text").text(`last update : ${last_update}`);
 
     let url_hash = location.hash;
     if(url_hash.length >= 2){
