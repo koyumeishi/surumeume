@@ -217,6 +217,21 @@ function setState(){
     $(`#round_${r_id}_${level}`).addClass("solved_by_me");
     cnt[Number(level-1)]++;
   }
+
+  let round_tr = $("#round_table > tr");
+  for(let i=0; i<round_tr.length; i++){
+    let r_id = Number( round_tr.get(i).id.substr(6) );
+    let cnt = 0;
+    for(let j=0; j<solved.length; j++){
+      if( submission_data.getValue( solved[j], 1 ) == r_id ){
+        cnt++;
+      }
+    }
+    if(cnt == 3){
+      round_tr.eq(i).addClass("solved_by_me");
+    }
+  }
+
   if(solved.length > 0) $("#count_solved").append(`<tr>
       <td><a href="https://www.topcoder.com/members/${$("#user_me").val()}" target="_blank">${$("#user_me").val()}</a></td>
       <td>${cnt[0]}</td>
@@ -227,7 +242,7 @@ function setState(){
 
   if(user !== "-") {
     $("#chart_you").show();
-    $("#chart_text_you").text(user);
+    //$("#chart_text_you").text(user);
     for(let i=0; i<3; i++){
       let table_for_chart = new google.visualization.DataTable();
       table_for_chart.addColumn("string", "state");
@@ -240,7 +255,7 @@ function setState(){
         title  : `${["Easy","Medium","Hard"][i]}`,
         legend : 'none',
         width  : "100%",
-        height : 250,
+        height : 230,
         pieSliceText: 'value',
         slices : {
           0:{color:`${["#0075c2","#e9bc00","#e95388"][i]}`},
@@ -256,12 +271,12 @@ function setState(){
     table_for_chart.addRow(["Score Hard",  cnt[2]*1000]);
     table_for_chart.addRow(["Unolved", round_data.getNumberOfRows()*(250+500+1000) - (cnt[0]*250 + cnt[1]*500 + cnt[2]*1000)]);
 
-    let chart_easy = new google.visualization.PieChart( $(`#chart_score_you`)[0] );
-    chart_easy.draw(table_for_chart, {
+    let chart_score = new google.visualization.PieChart( $(`#chart_score_you`)[0] );
+    chart_score.draw(table_for_chart, {
       title  : `Score`,
       legend : 'none',
       width  : "100%",
-      height : 250,
+      height : 230,
       pieSliceText: 'value',
       slices : {
         0:{color:`#0075c2`},
@@ -283,12 +298,26 @@ function setState(){
     $(`#round_${r_id}_${level}`).addClass("solved_by_rival");
     cnt[Number(level-1)]++;
   }
-  if(solved.length > 0) $("#count_solved").append(`<tr>
+  if(solved.length > 0){
+    $("#count_solved").append(`<tr>
       <td><a href="https://www.topcoder.com/members/${$("#user_rival").val()}" target="_blank">${$("#user_rival").val()}</a></td>
       <td>${cnt[0]}</td>
       <td>${cnt[1]}</td>
       <td>${cnt[2]}</td>
       <td>${cnt[0]*250 + cnt[1]*500 + cnt[2]*1000}</td>
     </tr>`);
+    for(let i=0; i<round_tr.length; i++){
+      let r_id = Number( round_tr.get(i).id.substr(6) );
+      let cnt = 0;
+      for(let j=0; j<solved.length; j++){
+        if( submission_data.getValue( solved[j], 1 ) == r_id ){
+          cnt++;
+        }
+      }
+      if(cnt == 3){
+        round_tr.eq(i).addClass("solved_by_rival");
+      }
+    }
+  }
 
 }
