@@ -80,9 +80,9 @@ function main(url_spread_sheet){
   });
 
   let p4 = new Promise(function(resolve, reject){
-    let query_round = new google.visualization.Query(`${url_spread_sheet}gviz/tq?range=update!A1:A1`);
-    query_round.setQuery("select *");
-    query_round.send( function(r){
+    let query_update = new google.visualization.Query(`${url_spread_sheet}gviz/tq?range=update!A1:A1`);
+    query_update.setQuery("select *");
+    query_update.send( function(r){
       last_update = r.getDataTable().getValue(0,0);
       resolve(1);
     } );
@@ -154,7 +154,7 @@ function setUserList(){
     for(let j=0; j<arr.length; j++){
       cnt[submission_data.getValue(arr[j], 2) - 1]++;
     }
-    score_data.addRow([0, users[i], cnt[0],cnt[1],cnt[2], cnt[0]*250+cnt[1]*500+cnt[2]*1000]);
+    score_data.addRow([0, `<a href="#${users[i]}" onClick="location.hash = '${users[i]}';resetTable(); setState(); $('html,body').animate({scrollTop:$('#problems').offset().top - 70});">${users[i]}</a>`, cnt[0],cnt[1],cnt[2], cnt[0]*250+cnt[1]*500+cnt[2]*1000]);
   }
   for(let i=0; i<score_data.getNumberOfRows(); i++){
     let rank = score_data.getFilteredRows([{column:5, minValue: score_data.getValue(i,5)+1 }]).length + 1;
