@@ -67,7 +67,7 @@ function main(url_spread_sheet){
 
   let p3 = new Promise(function(resolve, reject){
     let query_round = new google.visualization.Query(`${url_spread_sheet}gviz/tq?range=round_data!A:F`);
-    query_round.setQuery("select A,B,D,E,F order by B");
+    query_round.setQuery("select A,B,D,E,F");
     query_round.send( function(r){
       round_data = r.getDataTable();
       console.log( round_data.toJSON() );
