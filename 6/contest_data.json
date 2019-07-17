@@ -1,0 +1,9 @@
+{"data":
+  {
+    "spread_sheet_url" : "https://docs.google.com/spreadsheets/d/1dRZmsueWXnYyZsf8QBVWNJNhux-ervZxA3M07r2Ovbc/",
+    "name" : "SRM Div1 Easy Hunting",
+    "from" : "2019/07/17",
+    "to"   : "2019/08/31",
+    "description" : "<p>SRM DIV1 Easy 埋め用コンテストです。 square1001 さんセレクション<br>このページは補助ツール的な立ち位置なので詳しくは<a href='https://docs.google.com/spreadsheets/d/1HpCzGy_FlOk7p0Ok6x_InM-l49luYau1MCCObtfknFA/edit#gid=1932750714'>公式spreadsheets</a> を確認してください。<br>square1001 さんの難易度評価等もそちらにあります。</p><ol><li> 期間内に practice room に提出されたものを自動で集計します。<b>勝手に集計するので登録等は不要です</b>。 (公式spreadsheetの方は自己申告制です)</li><li> <b>提出者以外が system test を走らせる方法は存在しないため、 pass するかどうかは自身で確認してください</b></li><li> 0点以外の提出は正解とみなします</li><li> 提出を消去した場合、challenge で落とされた場合は、その提出はなかったものとして扱われます（落ちる提出は消す or 落とす推奨）</li><li> 集計は1時間毎 &amp; topcoder が提供する data feeds に遅延があるので、<b>提出が反映されるまで数時間のラグがあります</b></li><li> テストケース・他者の提出・解説を確認すること等は禁止しませんが、過去の自分/他者の提出をそのままコピペするのはご遠慮ください（練習なので）</li><li> 一律で Easy 250pts として計算します。 時間経過・再提出による得点の減衰は考慮しません</li><li> 期間終了後の進捗確認には <a href='https://competitiveprogramming.info/' target='_blank'>https://competitiveprogramming.info/</a> が便利です (Practice room status)</li><li><b>コンテスト数が多いのでデータの更新は 1/2 ずつ行われます。 提出が反映されるまで最悪半日ぐらいかかる場合があります。</b></li></ol><p>Editorial <a href='https://www.topcoder.com/blog/tag/srm-editorials/' target='_blank'>https://www.topcoder.com/blog/tag/srm-editorials/</a></p>"
+  }
+}

@@ -1,0 +1,118 @@
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav_contents" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../">SRM埋め</a>
+        <span class="navbar-brand" id="contest_name">Contest Name</span>
+      </div>
+      <div class="collapse navbar-collapse" id="nav_contents">
+        <ul class="nav navbar-nav">
+          <li><a id="start_end_time">Start/End Time</a></li>
+          <li class="virtual_link"><a id="nav_standings">Standings</a></li>
+          <li class="virtual_link"><a id="nav_submissions">Submissions</a></li>
+          <li class="virtual_link"><a id="nav_problems">Problems</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div style="height: 40px"></div>
+    </div>
+    <div class="row">
+      <h3>Description</h3>
+      <div id="description"></div>
+      <div class="row">
+        <span id="loading_text">loading...</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3>Standings</h3>
+      <div class="col-md-10">
+        <div id="score"></div>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Submissions</h3>
+      <div class="col-md-10">
+        <div id="all_submissions"></div>
+      </div>
+    </div>
+    <div class="row">
+    <h3 id="problems">Problems</h3>
+      <form class="col-xs-8">
+        <div class="form-group col-xs-6">
+          <label class="control-label">you</label>
+          <select class="form-control" id="user_me">
+            <option value="-">-</option>
+          </select>
+        </div>
+        <div class="form-group col-xs-6">
+          <label class="control-label">rival</label>
+          <select class="form-control" id="user_rival">
+            <option value="-" >-</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <p>ユーザーを変更した後のURLをブックマークすると便利かも</p>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table-bordered col-md-11">
+          <thaed>
+            <th class="col-md-2">Num of solved</th>
+            <th class="col-md-2">Easy</th>
+            <!-- <th class="col-md-2">Medium</th> -->
+            <!-- <th class="col-md-2">Hard</th> -->
+            <th class="col-md-2">Score</th>
+          </thaed>
+          <tbody id="count_solved" >
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row" id="chart_you">
+      <div class="col-xs-10">
+        <div class="col-xs-3"><div id="chart_easy_you"></div></div>
+        <!-- <div class="col-xs-3"><div id="chart_med_you"></div></div> -->
+        <!-- <div class="col-xs-3"><div id="chart_hard_you"></div></div> -->
+        <!-- <div class="col-xs-3"><div id="chart_score_you"></div></div> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table-bordered col-xs-11">
+          <tbody>
+            <td class="col-xs-1">Problem</td>
+            <td class="col-xs-3 solved_by_me">you solved</td>
+            <td class="col-xs-3 solved_by_rival">rival solved</td>
+            <td class="col-xs-3 solved_by_me  solved_by_rival">both solved</td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="table-bordered col-xs-11">
+          <thead>
+            <th>Round</th>
+            <th>Easy</th>
+            <!-- <th>Medium</th> -->
+            <!-- <th>Hard</th> -->
+          </thead>
+          <tbody id="round_table">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>

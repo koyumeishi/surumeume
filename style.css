@@ -42,6 +42,7 @@ th, td{
 .virtual_link:hover{
   cursor:pointer;
 }
-.problem_link{
-  color: inherit;
+
+a.problem_link{
+  text-decoration: underline !important;
 }
